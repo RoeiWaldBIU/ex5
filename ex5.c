@@ -316,8 +316,11 @@ void playSong(Playlist* playlist) {
 void addPlaylist(Playlist** addressArrPlaylist, int *playListCounter) {
     scanf("%*[^\n]");
     scanf("%*c");
+    if (*playListCounter == 0)
+        *addressArrPlaylist = (Playlist *)(sizeof(Playlist));
     // Realloc the array and add one place
-    *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter + 1) * sizeof(Playlist));
+    else
+        *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter + 1) * sizeof(Playlist));
     if (*addressArrPlaylist == NULL) {
         printf("Memory allocation failed for adding playlist\n");
         exit(1);
