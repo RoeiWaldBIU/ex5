@@ -263,9 +263,9 @@ void sortPlaylist(Playlist *playlist) {
     printf("sorted\n");
 }
 void swapSongs (Song** songs, int i, int j) {
-    Song *temp = songs[i];
-    songs[i] = songs[j];
-    songs[j] = temp;
+    Song temp = (*songs)[i];
+    (*songs)[i] = (*songs)[j];
+    (*songs)[j] = temp;
 }
 
 void sortByYear(Playlist* playlist) {
@@ -334,7 +334,7 @@ void removePlaylist(Playlist** addressArrPlaylist, int *playListCounter) {
     printf("Choose a playlist:\n");
     // loop that print the playlists
     for (int i =0 ; i < *playListCounter; i++) {
-        printf("\t%d. %s\n", i+1, addressArrPlaylist[i]->name);
+        printf("\t%d. %s\n", i+1, (*addressArrPlaylist)[i].name);
     }
     printf("\t%d. Back to menu\n", *playListCounter+1);
     int choice;
