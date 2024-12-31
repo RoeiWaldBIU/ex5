@@ -88,7 +88,7 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
             printf("Choose a playlist:\n");
             // loop that print the playlists
             for (int i =0 ; i < playListCounter; i++) {
-                printf("\t%d. %s\n", i+1, arrPlaylist[i]->name);
+                printf("\t%d. %s\n", i+1, (*arrPlaylist)[i].name);
             }
             // Add the back to menu at the end
             printf("\t%d. Back to main menu\n", playListCounter+1);
