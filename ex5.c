@@ -103,7 +103,7 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
         // print the playlist action options
         int actionChoice;
         printf("Playlist %s:\n", (*arrPlaylist)[choicePlaylist-1].name);
-        int songsCounter = 0;
+        //int songsCounter = 0;
         do{
             watchPlaylistMenu();
             // switch case for the action inside the Watch playlist
@@ -114,6 +114,7 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
                         break;
                 case 2:
                     addSong((*arrPlaylist)+(choicePlaylist-1));
+
                         break;
                 case 3:
                     deleteSong((*arrPlaylist)+(choicePlaylist-1));
@@ -224,7 +225,6 @@ void deleteSong(Playlist* playlist) {
     freeSong(playlist->songs[choice]);
     playlist->songsNum -= 1;
     for (int i = choice; i < playlist->songsNum; i++) {
-        Song* temp = playlist->songs[i];
         playlist->songs[i] = playlist->songs[i+1];
     }
     printf("Song deleted successfully.\n");
@@ -316,11 +316,11 @@ void playSong(Playlist* playlist) {
 void addPlaylist(Playlist** addressArrPlaylist, int *playListCounter) {
     scanf("%*[^\n]");
     scanf("%*c");
-    if (*playListCounter == 0)
-        *addressArrPlaylist = (Playlist *)(sizeof(Playlist));
+    // if (*playListCounter == 0)
+    //     *addressArrPlaylist = (Playlist *)(sizeof(Playlist));
     // Realloc the array and add one place
-    else
-        *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter + 1) * sizeof(Playlist));
+    //else
+    *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter + 1) * sizeof(Playlist));
     if (*addressArrPlaylist == NULL) {
         printf("Memory allocation failed for adding playlist\n");
         exit(1);
@@ -347,9 +347,8 @@ void removePlaylist(Playlist** addressArrPlaylist, int *playListCounter) {
     choice -= 1;
     freePlaylist(addressArrPlaylist[choice]);
     *playListCounter -= 1;
-    for (int i = 0; i < *playListCounter; i++) {
-        Playlist* temp = addressArrPlaylist[i];
-        addressArrPlaylist[i] = addressArrPlaylist[i+1];
+    for (int i = choice; i < *playListCounter; i++) {
+        *addressArrPlaylist[i] = *addressArrPlaylist[i+1];
     }
 }
 void freePlaylist (Playlist* playlist) {
