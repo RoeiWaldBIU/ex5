@@ -106,7 +106,7 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
         // print the playlist action options
         choicePlaylist -= 1;
         int actionChoice;
-        printf("Playlist %s:\n", (*arrPlaylist)[choicePlaylist].name);
+        printf("playlist %s:\n", (*arrPlaylist)[choicePlaylist].name);
         //int songsCounter = 0;
         do{
             watchPlaylistMenu();
@@ -365,12 +365,8 @@ void removePlaylist(Playlist** addressArrPlaylist, int* playListCounter) {
             printf("failed to reallocate memory\n");
             exit(1);
         }
-    printf("re allocated\n");
     }
-    //else {
-    //free(*addressArrPlaylist);
-    //*addressArrPlaylist = NULL;
-    //}
+    printf("Playlist deleted.\n");
 }
 void freePlaylist (Playlist* playlist) {
     for (int i = 0; i < playlist->songsNum; i++)
