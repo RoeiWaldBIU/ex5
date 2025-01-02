@@ -388,7 +388,6 @@ void freePlaylist (Playlist* playlist) {
 void freeAll (Playlist** addressArrPlaylist, int playlistCounter) {
     for (int i = 0; i < playlistCounter; i++) {
         freePlaylist(&(*addressArrPlaylist)[i]);
-        free (&(*addressArrPlaylist)[i]);
     }
     free(*addressArrPlaylist);
 }
