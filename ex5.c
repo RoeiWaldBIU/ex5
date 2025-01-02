@@ -27,7 +27,7 @@ void addSong(Playlist *playlist);
 void deleteSong(Playlist* playlist);
 void freeSong(Song* song);
 void sortPlaylist(Playlist *playlist);
-void swapSongs (Song** songi, Song** songj);
+void swapSongs(Playlist* playlist, int i, int j);
 void sortByYear(Playlist* playlist);
 void sortByStreamsA(Playlist* playlist);
 void sortByStreamsD(Playlist* playlist);
@@ -59,7 +59,7 @@ int main() {
             case 4:
                 freeAll(&arrPlaylist, playlistCounter);
                 printf("Goodbye!\n");
-            exit(0);
+                return 0;
             default:
                 printf("Invalid option\n");
         }
@@ -71,14 +71,10 @@ int main() {
 void printPlaylistsMenu() {
     printf("Please Choose:\n");
     printf("\t1. Watch playlists\n\t2. Add playlist\n\t3. Remove playlist\n\t4. exit\n");
-    return;
 }
-
 void watchPlaylistMenu() {
     printf("\t1. Show Playlist\n\t2. Add Song\n\t3. Delete Song\n\t4. sort\n\t5. Play\n\t6. exit\n");
-    return;
 }
-
 void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
     while (TRUE) {
         // If there are no playlists
@@ -177,7 +173,6 @@ void showPlaylist (Playlist *playlist) {
         printf("choose a song to play, or 0 to quit:\n");
         scanf("%d", &peekSong);
     }
-    return;
 }
 // Func to add song to the playlist
 void addSong(Playlist *playlist) {
@@ -274,17 +269,16 @@ void sortPlaylist(Playlist *playlist) {
     }
     printf("sorted\n");
 }
-void swapSongs (Song** songi, Song** songj) {
-    Song *temp = *songi;
-    *songi = *songj;
-    *songj = temp;
+void swapSongs(Playlist* playlist, int i, int j) {
+    Song* temp = playlist->songs[i];
+    playlist->songs[i] = playlist->songs[j];
+    playlist->songs[j] = temp;
 }
-
 void sortByYear(Playlist* playlist) {
     for(int i = 0; i < playlist->songsNum - 1; i++) {
         for (int j = 0; j < playlist->songsNum - i - 1; j++) {
             if (playlist->songs[j]->year > playlist->songs[j+1]->year)
-                swapSongs(&playlist->songs[i], &playlist->songs[j]);
+                swapSongs(playlist, j, j+1);
         }
     }
 }
@@ -292,7 +286,7 @@ void sortByStreamsA(Playlist* playlist) {
     for(int i = 0; i < playlist->songsNum - 1; i++) {
         for (int j = 0; j < playlist->songsNum - i - 1; j++) {
             if (playlist->songs[j]->streams > playlist->songs[j+1]->streams)
-                swapSongs(&playlist->songs[i], &playlist->songs[j]);
+                swapSongs(playlist, j, j+1);
         }
     }
 }
@@ -301,7 +295,7 @@ void sortByStreamsD(Playlist* playlist) {
     for(int i = 0; i < playlist->songsNum - 1; i++) {
         for (int j = 0; j < playlist->songsNum - i - 1; j++) {
             if (playlist->songs[j]->streams < playlist->songs[j+1]->streams)
-                swapSongs(&playlist->songs[i], &playlist->songs[j]);
+                swapSongs(playlist, j, j+1);
         }
     }
 }
@@ -309,7 +303,7 @@ void sortByAlphabet(Playlist* playlist) {
     for(int i = 0; i < playlist->songsNum - 1; i++) {
         for (int j = 0; j < playlist->songsNum - i - 1; j++) {
             if (strcmp(playlist->songs[j]->title, playlist->songs[j+1]->title) > 0)
-                swapSongs(&playlist->songs[i], &playlist->songs[j]);
+                swapSongs(playlist, j, j+1);
         }
     }
 }
@@ -423,5 +417,3 @@ char* takeInput() {
     }
     return input;
 }
-
-
