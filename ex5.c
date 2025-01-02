@@ -141,7 +141,7 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
 }
 // print the playlist
 void showPlaylist (Playlist *playlist) {
-    int peekSong;
+    int pickkSong;
     if (playlist->songsNum != 0) {
 
         // Run for the number of the song in the playlist and print title, artist, year, streams
@@ -154,24 +154,24 @@ void showPlaylist (Playlist *playlist) {
         printf("\n");
 
         printf("choose a song to play, or 0 to quit:\n");
-        scanf("%d", &peekSong);
-        while (peekSong != 0){
-            if (peekSong < 0 || peekSong > playlist->songsNum+1) {
+        scanf("%d", &pickkSong);
+        while (pickkSong != 0){
+            if (pickkSong < 0 || pickkSong > playlist->songsNum+1) {
                 printf("Invalid input\n");
-                scanf("%d", &peekSong);
+                scanf("%d", &pickkSong);
             }
             else {
-                printf("Now playing %s:\n", playlist->songs[peekSong-1]->title);
-                printf("$ %s $\n", playlist->songs[peekSong-1]->lyrics);
-                playlist->songs[peekSong-1]->streams +=1;
+                printf("Now playing %s:\n", playlist->songs[pickkSong-1]->title);
+                printf("$ %s $\n", playlist->songs[pickkSong-1]->lyrics);
+                playlist->songs[pickkSong-1]->streams +=1;
                 printf("choose a song to play, or 0 to quit:\n");
-                scanf("%d", &peekSong);
+                scanf("%d", &pickkSong);
             }
         }
     }
     else {
         printf("choose a song to play, or 0 to quit:\n");
-        scanf("%d", &peekSong);
+        scanf("%d", &pickkSong);
     }
 }
 // Func to add song to the playlist
@@ -395,7 +395,7 @@ char* takeInput() {
     // read the input char by char. till the end
     while (TRUE) {
         scanf("%c", &inputChar);
-        if (inputChar == '\n' || inputChar == '\r')
+        if (inputChar == '\n')
             break;
         // reallocate more place for the next char
         input = (char*) realloc(input, (inputCounter+1) * sizeof(char));
