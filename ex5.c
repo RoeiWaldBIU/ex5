@@ -358,6 +358,7 @@ void removePlaylist(Playlist** addressArrPlaylist, int* playListCounter) {
     choice -= 1;
     printf("start freeing\n");
     freePlaylist((*addressArrPlaylist)+choice);
+    free((*addressArrPlaylist)+choice);
     printf("start freeing\n");
     *playListCounter -= 1;
     for (int i = choice; i < *playListCounter; i++) {
@@ -373,7 +374,6 @@ void freePlaylist (Playlist* playlist) {
         freeSong(playlist->songs[i]);
     free(playlist->name);
     free(playlist->songs);
-    free(playlist);
 }
 
 void freeAll (Playlist** addressArrPlaylist, int playlistCounter) {
