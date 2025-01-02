@@ -182,7 +182,7 @@ void showPlaylist (Playlist *playlist) {
 // Func to add song to the playlist
 void addSong(Playlist *playlist) {
     // clean the buffer
-    scanf("%*[^\n]");
+    scanf("%*[^ \n]");
     scanf("%*c");
     // increment the number of song in 1
     playlist->songsNum += 1;
@@ -326,7 +326,7 @@ void playSong(Playlist* playlist) {
 }
 
 void addPlaylist(Playlist** addressArrPlaylist, int *playListCounter) {
-    scanf("%*[^\n]");
+    scanf("%*[^ \n]");
     scanf("%*c");
     // Realloc the array and add one place
     *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter + 1) * sizeof(Playlist));
