@@ -360,13 +360,23 @@ void removePlaylist(Playlist** addressArrPlaylist, int* playListCounter) {
         return;
     choice -= 1;
     freePlaylist((*addressArrPlaylist)+choice);
-    free((*addressArrPlaylist)+choice);
+    //free((*addressArrPlaylist)+choice);
     *playListCounter -= 1;
     for (int i = choice; i < *playListCounter; i++) {
         (*addressArrPlaylist)[i] = (*addressArrPlaylist)[i+1];
     }
-    if (*playListCounter)
+    if (*playListCounter > 0) {
         *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter)*sizeof(Playlist));
+        if (*addressArrPlaylist == NULL) {
+            printf("failed to reallocate memory\n");
+            exit(1);
+        }
+    printf("re allocated\n");
+    }
+    //else {
+    //free(*addressArrPlaylist);
+    //*addressArrPlaylist = NULL;
+    //}
 }
 void freePlaylist (Playlist* playlist) {
     for (int i = 0; i < playlist->songsNum; i++)
