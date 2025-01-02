@@ -73,7 +73,7 @@ void printPlaylistsMenu() {
     printf("\t1. Watch playlists\n\t2. Add playlist\n\t3. Remove playlist\n\t4. exit\n");
 }
 void watchPlaylistMenu() {
-    printf("\t1. Show Playlist\n\t2. Add Song\n\t3. Delete Song\n\t4. sort\n\t5. Play\n\t6. exit\n");
+    printf("\t1. Show Playlist\n\t2. Add Song\n\t3. Delete Song\n\t4. Sort\n\t5. Play\n\t6. exit\n");
 }
 void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
     while (TRUE) {
@@ -404,6 +404,8 @@ char* takeInput() {
             printf("Memory allocation failed for taking input\n");
             exit(1);
         }
+        if (inputChar == '\r')
+            inputChar = '\0';
         // Enter the char to the available place
         input[inputCounter-1] = inputChar;
         // Add one to the size of the input
