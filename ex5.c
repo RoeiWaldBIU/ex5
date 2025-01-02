@@ -18,6 +18,7 @@ typedef struct Playlist {
     Song** songs;
     int songsNum;
 } Playlist;
+
 void printPlaylistsMenu();
 void watchPlaylistMenu();
 void watchPlaylist(Playlist ** arrPlaylist, int playListCounter);
@@ -82,6 +83,7 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
     while (TRUE) {
         // If there are no playlists
         if (playListCounter == 0) {
+            printf("Choose a playlist:\n");
             printf("\t1. Back to main menu\n");
         }
         else {
@@ -96,13 +98,19 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
         // Get the choice of which playlist the user want to access
         int choicePlaylist;
         scanf("%d", &choicePlaylist);
+        while (choicePlaylist <= 0 || choicePlaylist > playListCounter+1){
+            printf("Invalid option\n");
+            printf("Choose a playlist:\n");
+            scanf("%d",&choicePlaylist);
+        }
         // If chosen back to menu - back to menu
         if (choicePlaylist == playListCounter+1) {
             return;
         }
         // print the playlist action options
+        choicePlaylist -= 1;
         int actionChoice;
-        printf("Playlist %s:\n", (*arrPlaylist)[choicePlaylist-1].name);
+        printf("Playlist %s:\n", (*arrPlaylist)[choicePlaylist].name);
         //int songsCounter = 0;
         do{
             watchPlaylistMenu();
@@ -110,21 +118,21 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
             scanf("%d", &actionChoice);
             switch (actionChoice) {
                 case 1:
-                    showPlaylist ((*arrPlaylist)+(choicePlaylist-1));
+                    showPlaylist ((*arrPlaylist)+(choicePlaylist));
                         break;
                 case 2:
-                    addSong((*arrPlaylist)+(choicePlaylist-1));
+                    addSong((*arrPlaylist)+(choicePlaylist));
 
                         break;
                 case 3:
-                    deleteSong((*arrPlaylist)+(choicePlaylist-1));
+                    deleteSong((*arrPlaylist)+(choicePlaylist));
                         //freeSong();
                             break;
                 case 4:
-                    sortPlaylist((*arrPlaylist)+(choicePlaylist-1));
+                    sortPlaylist((*arrPlaylist)+(choicePlaylist));
                         break;
                 case 5:
-                    playSong ((*arrPlaylist)+(choicePlaylist-1));
+                    playSong ((*arrPlaylist)+(choicePlaylist));
                         break;
                 case 6:
                 break;
@@ -316,10 +324,7 @@ void playSong(Playlist* playlist) {
 void addPlaylist(Playlist** addressArrPlaylist, int *playListCounter) {
     scanf("%*[^\n]");
     scanf("%*c");
-    // if (*playListCounter == 0)
-    //     *addressArrPlaylist = (Playlist *)(sizeof(Playlist));
     // Realloc the array and add one place
-    //else
     *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter + 1) * sizeof(Playlist));
     if (*addressArrPlaylist == NULL) {
         printf("Memory allocation failed for adding playlist\n");
@@ -327,29 +332,41 @@ void addPlaylist(Playlist** addressArrPlaylist, int *playListCounter) {
     }
     printf("Enter playlist's name:\n");
     (*addressArrPlaylist)[*playListCounter].name = takeInput();
+    printf("name entered:\n");
     (*addressArrPlaylist)[*playListCounter].songsNum = 0;
     (*addressArrPlaylist)[*playListCounter].songs = NULL;
     // Add one to the counter
     *playListCounter += 1;
 }
 
-void removePlaylist(Playlist** addressArrPlaylist, int *playListCounter) {
+void removePlaylist(Playlist** addressArrPlaylist, int* playListCounter) {
     printf("Choose a playlist:\n");
     // loop that print the playlists
     for (int i =0 ; i < *playListCounter; i++) {
         printf("\t%d. %s\n", i+1, (*addressArrPlaylist)[i].name);
     }
-    printf("\t%d. Back to menu\n", *playListCounter+1);
+    printf("\t%d. Back to main menu\n", *playListCounter+1);
     int choice;
     scanf("%d", &choice);
+    while (choice <= 0 || choice > *playListCounter+1){
+        printf("Invalid option\n");
+        printf("Choose a playlist:\n");
+        scanf("%d",&choice);
+    }
     if (choice == *playListCounter+1)
         return;
     choice -= 1;
-    freePlaylist(addressArrPlaylist[choice]);
+    printf("start freeing\n");
+    freePlaylist((*addressArrPlaylist)+choice);
+    printf("start freeing\n");
     *playListCounter -= 1;
     for (int i = choice; i < *playListCounter; i++) {
-        *addressArrPlaylist[i] = *addressArrPlaylist[i+1];
+        printf("change locations\n");
+        (*addressArrPlaylist)[i] = (*addressArrPlaylist)[i+1];
     }
+    printf("before realloc\n");
+    *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter)*sizeof(Playlist));
+    printf("after realloc\n");
 }
 void freePlaylist (Playlist* playlist) {
     for (int i = 0; i < playlist->songsNum; i++)
@@ -367,37 +384,33 @@ void freeAll (Playlist** addressArrPlaylist, int playlistCounter) {
 
 char* takeInput() {
     // Current size of the input (letter by letter)
-    int inputCounter = 0;
+    int inputCounter = 1;
     // allocate memory for the capacity of one char for the first char
-    char* input = (char*) malloc(sizeof(char) + 1);
-    // if malloc failed
-    if (input == NULL) {
-        printf("Memory allocation failed for taking input\n");
-        exit(1);
-    }
+    char* input = NULL;
     char inputChar = '\0';
     // read the input char by char. till the end
     while (TRUE) {
         scanf("%c", &inputChar);
-        if (inputChar == '\n')
+        if (inputChar == '\n' || inputChar == '\r')
             break;
-        // Enter the char to the avillabe place
-        input[inputCounter] = inputChar;
-        // Add one to the size of the input
-        inputCounter++;
+        printf("before realloc\n");
         // reallocate more place for the next char
         input = (char*) realloc(input, (inputCounter+1) * sizeof(char));
+        printf("after realloc\n");
         // If realloc failed
         if (input == NULL) {
             printf("Memory allocation failed for taking input\n");
             exit(1);
         }
+        // Enter the char to the available place
+        input[inputCounter-1] = inputChar;
+        // Add one to the size of the input
+        inputCounter++;
     }
     // Add '\0' to the end of the string
-    input[inputCounter] = '\0';
+    input[inputCounter-1] = '\0';
     // if nothing was input - free the memory
-    if (inputCounter == 0) {
-        free(input);
+    if (inputCounter == 1) {
         return NULL;
     }
     return input;
