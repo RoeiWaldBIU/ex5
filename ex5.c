@@ -366,7 +366,8 @@ void removePlaylist(Playlist** addressArrPlaylist, int* playListCounter) {
         (*addressArrPlaylist)[i] = (*addressArrPlaylist)[i+1];
     }
     printf("before realloc\n");
-    *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter)*sizeof(Playlist));
+    if (*playListCounter)
+        *addressArrPlaylist = realloc(*addressArrPlaylist, (*playListCounter)*sizeof(Playlist));
     printf("after realloc\n");
 }
 void freePlaylist (Playlist* playlist) {
