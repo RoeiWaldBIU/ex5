@@ -417,7 +417,6 @@ void removePlaylist(Playlist** addressArrPlaylist, int* playListCounter) {
             printf("failed to reallocate memory\n");
             exit(1);
         }
-    printf("re allocated\n");
     }
 }
 // Func that free the playlist
