@@ -80,7 +80,7 @@ void printPlaylistsMenu() {
 }
 // print the specific playlist action menu
 void watchPlaylistMenu() {
-    printf("\t1. Show Playlist\n\t2. Add Song\n\t3. Delete Song\n\t4. sort\n\t5. Play\n\t6. exit\n");
+    printf("\t1. Show Playlist\n\t2. Add Song\n\t3. Delete Song\n\t4. Sort\n\t5. Play\n\t6. exit\n");
 }
 // // Watch playlist and enter the actions on specific playlist
 void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
@@ -114,7 +114,7 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
         // print the playlist action options
         choicePlaylist -= 1;
         int actionChoice;
-        printf("Playlist %s:\n", (*arrPlaylist)[choicePlaylist].name);
+        printf("playlist %s:\n", (*arrPlaylist)[choicePlaylist].name);
         //int songsCounter = 0;
         do{
             watchPlaylistMenu();
