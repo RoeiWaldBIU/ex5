@@ -418,6 +418,7 @@ void removePlaylist(Playlist** addressArrPlaylist, int* playListCounter) {
             exit(1);
         }
     }
+    printf("Playlist deleted.\n");
 }
 // Func that free the playlist
 void freePlaylist (Playlist* playlist) {
