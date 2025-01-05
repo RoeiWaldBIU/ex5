@@ -1,3 +1,9 @@
+/******************
+Name: Roei Wald
+ID: 211589791
+Assignment: ex4
+*******************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,6 +44,7 @@ void removePlaylist(Playlist** addressArrPlaylist, int *playListCounter);
 void freePlaylist (Playlist* playlist);
 void freeAll (Playlist** addressArrPlaylist, int playlistCounter);
 char* takeInput();
+
 int main() {
     int choice = 0;
     // An array of the playlist addresses
