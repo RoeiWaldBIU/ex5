@@ -112,6 +112,12 @@ void watchPlaylist(Playlist ** arrPlaylist, int playListCounter) {
         while (choicePlaylist <= 0 || choicePlaylist > playListCounter+1){
             printf("Invalid option\n");
             printf("Choose a playlist:\n");
+                // loop that print the playlists
+                for (int i =0 ; i < playListCounter; i++) {
+                    printf("\t%d. %s\n", i+1, (*arrPlaylist)[i].name);
+                }
+                // Add the back to menu at the end
+                printf("\t%d. Back to main menu\n", playListCounter+1);
             scanf("%d",&choicePlaylist);
         }
         // If chosen back to menu - back to menu
@@ -179,7 +185,7 @@ void showPlaylist (Playlist *playlist) {
             // if invalid input was given
             if (pickSong < 0 || pickSong > playlist->songsNum+1) {
                 printf("Invalid input\n");
-                scanf("%d", &pickSong);
+                return;
             }
             //print the name of the song and its lyrics, add one to the streans
             else {
@@ -252,10 +258,10 @@ void deleteSong(Playlist* playlist) {
     scanf("%d", &choice);
     if (!choice)
         return;
-    while (choice < 0 || choice > playlist->songsNum+1) {
+    while (choice < 0 || choice > playlist->songsNum) {
         // if invalid input was given
-        printf("Invalid input\n");
-        scanf("%d", &choice);
+        //printf("Invalid input\n");
+        return;
     }
     // accord the choice to the array places
     choice -= 1;
@@ -397,11 +403,9 @@ void removePlaylist(Playlist** addressArrPlaylist, int* playListCounter) {
     printf("\t%d. Back to main menu\n", *playListCounter+1);
     int choice;
     scanf("%d", &choice);
-    // if invalid input was given - rescan
+    // if invalid input was given - return
     while (choice <= 0 || choice > *playListCounter+1){
-        printf("Invalid option\n");
-        printf("Choose a playlist:\n");
-        scanf("%d",&choice);
+        return;
     }
     // if choosed to return to menu
     if (choice == *playListCounter+1)
